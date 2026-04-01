@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Companies</h2>
+
+<a class="button" href="{{ url_for('add_company') }}">Add Company</a>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Website</th>
+        <th>Actions</th>
+    </tr>
+    {% for company in companies %}
+    <tr>
+        <td>{{ company.company_id }}</td>
+        <td>{{ company.name }}</td>
+        <td>{{ company.location }}</td>
+        <td>{{ company.website }}</td>
+        <td>
+            <a href="{{ url_for('edit_company', company_id=company.company_id) }}">Edit</a>
+            <a href="{{ url_for('delete_company', company_id=company.company_id) }}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

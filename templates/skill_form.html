@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ 'Edit' if skill else 'Add' }} Skill</h2>
+
+<form method="POST">
+    <label for="skill_name">Skill Name</label>
+    <input type="text" id="skill_name" name="skill_name" value="{{ skill.skill_name if skill else '' }}" required>
+
+    <label for="category">Category</label>
+    <input type="text" id="category" name="category" value="{{ skill.category if skill else '' }}">
+
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

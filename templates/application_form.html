@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ 'Edit' if application else 'Add' }} Application</h2>
+
+<form method="POST">
+    <label for="job_id">Job</label>
+    <select id="job_id" name="job_id" required>
+        {% for job in jobs %}
+        <option value="{{ job.job_id }}"
+            {% if application and application.job_id == job.job_id %}selected{% endif %}>
+            {{ job.title }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <label for="application_date">Application Date</label>
+    <input type="date" id="application_date" name="application_date" value="{{ application.application_date if application else '' }}">
+
+    <label for="status">Status</label>
+    <input type="text" id="status" name="status" value="{{ application.status if application else '' }}">
+
+    <label for="user_skills">Your Skills (comma separated)</label>
+    <input type="text" id="user_skills" name="user_skills" value="{{ application.user_skills if application else '' }}">
+
+    <label for="notes">Notes</label>
+    <textarea id="notes" name="notes">{{ application.notes if application else '' }}</textarea>
+
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

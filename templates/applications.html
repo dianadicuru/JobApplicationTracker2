@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Applications</h2>
+
+<a class="button" href="{{ url_for('add_application') }}">Add Application</a>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Job</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>User Skills</th>
+        <th>Actions</th>
+    </tr>
+    {% for application in applications %}
+    <tr>
+        <td>{{ application.application_id }}</td>
+        <td>{{ application.job_title }}</td>
+        <td>{{ application.application_date }}</td>
+        <td>{{ application.status }}</td>
+        <td>{{ application.user_skills }}</td>
+        <td>
+            <a href="{{ url_for('edit_application', application_id=application.application_id) }}">Edit</a>
+            <a href="{{ url_for('delete_application', application_id=application.application_id) }}">Delete</a>
+            <a href="{{ url_for('match', application_id=application.application_id) }}">Job Match</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

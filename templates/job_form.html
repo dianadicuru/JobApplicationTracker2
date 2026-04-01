@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ 'Edit' if job else 'Add' }} Job</h2>
+
+<form method="POST">
+    <label for="company_id">Company</label>
+    <select id="company_id" name="company_id" required>
+        {% for company in companies %}
+        <option value="{{ company.company_id }}"
+            {% if job and job.company_id == company.company_id %}selected{% endif %}>
+            {{ company.name }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <label for="title">Title</label>
+    <input type="text" id="title" name="title" value="{{ job.title if job else '' }}" required>
+
+    <label for="salary">Salary</label>
+    <input type="number" step="0.01" id="salary" name="salary" value="{{ job.salary if job else '' }}">
+
+    <label for="status">Status</label>
+    <input type="text" id="status" name="status" value="{{ job.status if job else '' }}">
+
+    <label for="required_skills">Required Skills (comma separated)</label>
+    <input type="text" id="required_skills" name="required_skills" value="{{ job.required_skills if job else '' }}">
+
+    <label for="description">Description</label>
+    <textarea id="description" name="description">{{ job.description if job else '' }}</textarea>
+
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

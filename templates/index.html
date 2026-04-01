@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Welcome to the Job Application Tracker</h2>
+<p>Use this application to manage companies, jobs, skills, and job applications.</p>
+
+<div class="card-grid">
+    <a class="card" href="{{ url_for('companies') }}">Companies</a>
+    <a class="card" href="{{ url_for('jobs') }}">Jobs</a>
+    <a class="card" href="{{ url_for('skills') }}">Skills</a>
+    <a class="card" href="{{ url_for('applications') }}">Applications</a>
+</div>
+{% endblock %}

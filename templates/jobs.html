@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Jobs</h2>
+
+<a class="button" href="{{ url_for('add_job') }}">Add Job</a>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Company</th>
+        <th>Title</th>
+        <th>Salary</th>
+        <th>Status</th>
+        <th>Required Skills</th>
+        <th>Actions</th>
+    </tr>
+    {% for job in jobs %}
+    <tr>
+        <td>{{ job.job_id }}</td>
+        <td>{{ job.company_name }}</td>
+        <td>{{ job.title }}</td>
+        <td>{{ job.salary }}</td>
+        <td>{{ job.status }}</td>
+        <td>{{ job.required_skills }}</td>
+        <td>
+            <a href="{{ url_for('edit_job', job_id=job.job_id) }}">Edit</a>
+            <a href="{{ url_for('delete_job', job_id=job.job_id) }}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
