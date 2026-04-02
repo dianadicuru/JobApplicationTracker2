@@ -3,25 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Application Tracker</title>
+    <title>Job Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <nav>
-        <h1>Job Application Tracker</h1>
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('companies') }}">Companies</a>
-        <a href="{{ url_for('jobs') }}">Jobs</a>
-        <a href="{{ url_for('skills') }}">Skills</a>
-        <a href="{{ url_for('applications') }}">Applications</a>
-    </nav>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">Job Application Tracker</h1>
 
-    <main>
-        {% with messages = get_flashed_messages() %}
+            <nav class="navbar">
+                <a href="{{ url_for('dashboard') }}">Home</a>
+                <a href="{{ url_for('companies') }}">Companies</a>
+                <a href="{{ url_for('jobs') }}">Jobs</a>
+                <a href="{{ url_for('applications') }}">Applications</a>
+                <a href="{{ url_for('contacts') }}">Contacts</a>
+                <a href="{{ url_for('job_match') }}">Job Match</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                {% for message in messages %}
-                    <div class="flash">{{ message }}</div>
-                {% endfor %}
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
             {% endif %}
         {% endwith %}
 

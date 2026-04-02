@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ 'Edit' if contact else 'Add' }} Contact</h2>
+
+<div class="form-card">
+    <form method="POST">
+
+        <div class="form-group">
+            <label for="company_id">Company</label>
+            <select id="company_id" name="company_id" required>
+                <option value="">Select a company</option>
+                {% for company in companies %}
+                    <option value="{{ company.company_id }}"
+                        {% if contact and contact.company_id == company.company_id %}selected{% endif %}>
+                        {{ company.company_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="contact_name">Contact Name</label>
+            <input type="text" id="contact_name" name="contact_name"
+                   value="{{ contact.contact_name if contact else '' }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title"
+                   value="{{ contact.title if contact else '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email"
+                   value="{{ contact.email if contact else '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" id="phone" name="phone"
+                   value="{{ contact.phone if contact else '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="linkedin_url">LinkedIn URL</label>
+            <input type="text" id="linkedin_url" name="linkedin_url"
+                   value="{{ contact.linkedin_url if contact else '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes" rows="4">{{ contact.notes if contact else '' }}</textarea>
+        </div>
+
+        <button type="submit" class="save-btn">Save</button>
+
+    </form>
+</div>
+{% endblock %}

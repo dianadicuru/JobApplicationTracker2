@@ -3,32 +3,70 @@
 {% block content %}
 <h2>{{ 'Edit' if job else 'Add' }} Job</h2>
 
-<form method="POST">
-    <label for="company_id">Company</label>
-    <select id="company_id" name="company_id" required>
-        {% for company in companies %}
-        <option value="{{ company.company_id }}"
-            {% if job and job.company_id == company.company_id %}selected{% endif %}>
-            {{ company.name }}
-        </option>
-        {% endfor %}
-    </select>
+<div class="form-card">
+    <form method="POST">
 
-    <label for="title">Title</label>
-    <input type="text" id="title" name="title" value="{{ job.title if job else '' }}" required>
+        <div class="form-group">
+            <label for="job_title">Job Title</label>
+            <input type="text" id="job_title" name="job_title"
+                   value="{{ job.job_title if job else '' }}" required>
+        </div>
 
-    <label for="salary">Salary</label>
-    <input type="number" step="0.01" id="salary" name="salary" value="{{ job.salary if job else '' }}">
+        <div class="form-group">
+            <label for="company_id">Company</label>
+            <select id="company_id" name="company_id" required>
+                <option value="">Select a company</option>
+                {% for company in companies %}
+                    <option value="{{ company.company_id }}"
+                        {% if job and job.company_id == company.company_id %}selected{% endif %}>
+                        {{ company.company_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
 
-    <label for="status">Status</label>
-    <input type="text" id="status" name="status" value="{{ job.status if job else '' }}">
+        <div class="form-group">
+            <label for="job_type">Job Type</label>
+            <select id="job_type" name="job_type">
+                <option value="">Select job type</option>
+                <option value="Full-time" {% if job and job.job_type == 'Full-time' %}selected{% endif %}>Full-time</option>
+                <option value="Part-time" {% if job and job.job_type == 'Part-time' %}selected{% endif %}>Part-time</option>
+                <option value="Contract" {% if job and job.job_type == 'Contract' %}selected{% endif %}>Contract</option>
+                <option value="Internship" {% if job and job.job_type == 'Internship' %}selected{% endif %}>Internship</option>
+            </select>
+        </div>
 
-    <label for="required_skills">Required Skills (comma separated)</label>
-    <input type="text" id="required_skills" name="required_skills" value="{{ job.required_skills if job else '' }}">
+        <div class="form-group">
+            <label for="salary_min">Minimum Salary</label>
+            <input type="number" id="salary_min" name="salary_min"
+                   value="{{ job.salary_min if job else '' }}">
+        </div>
 
-    <label for="description">Description</label>
-    <textarea id="description" name="description">{{ job.description if job else '' }}</textarea>
+        <div class="form-group">
+            <label for="salary_max">Maximum Salary</label>
+            <input type="number" id="salary_max" name="salary_max"
+                   value="{{ job.salary_max if job else '' }}">
+        </div>
 
-    <button type="submit">Save</button>
-</form>
+        <div class="form-group">
+            <label for="job_url">Job URL</label>
+            <input type="text" id="job_url" name="job_url"
+                   value="{{ job.job_url if job else '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="date_posted">Date Posted</label>
+            <input type="date" id="date_posted" name="date_posted"
+                   value="{{ job.date_posted if job and job.date_posted else '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="requirements">Requirements (JSON)</label>
+            <textarea id="requirements" name="requirements" rows="6" placeholder='{"required_skills": ["Python", "SQL", "Flask"]}'>{{ job.requirements if job and job.requirements else '' }}</textarea>
+        </div>
+
+        <button type="submit" class="save-btn">Save</button>
+
+    </form>
+</div>
 {% endblock %}

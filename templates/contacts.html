@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Contacts</h2>
+
+<p><a href="{{ url_for('add_contact') }}" class="add-link">Add Contact</a></p>
+
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>Contact Name</th>
+            <th>Company</th>
+            <th>Title</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>LinkedIn</th>
+            <th>Notes</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contact in contacts %}
+        <tr>
+            <td>{{ contact.contact_name }}</td>
+            <td>{{ contact.company_name }}</td>
+            <td>{{ contact.title or '' }}</td>
+            <td>{{ contact.email or '' }}</td>
+            <td>{{ contact.phone or '' }}</td>
+            <td>
+                {% if contact.linkedin_url %}
+                    <a href="{{ contact.linkedin_url }}" target="_blank">Profile</a>
+                {% endif %}
+            </td>
+            <td>{{ contact.notes or '' }}</td>
+            <td>
+                <a href="{{ url_for('edit_contact', contact_id=contact.contact_id) }}" class="edit-btn">Edit</a>
+                <a href="{{ url_for('delete_contact', contact_id=contact.contact_id) }}"
+                   class="delete-btn"
+                   onclick="return confirm('Are you sure you want to delete this contact?');">Delete</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="8">No contacts found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Job Match</h2>
+
+<div class="form-card">
+    <form method="POST">
+        <div class="form-group">
+            <label for="job_id">Select Job</label>
+            <select id="job_id" name="job_id" required>
+                <option value="">Select a job</option>
+                {% for job in jobs %}
+                    <option value="{{ job.job_id }}"
+                        {% if selected_job and selected_job.job_id == job.job_id %}selected{% endif %}>
+                        {{ job.job_title }} - {{ job.company_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="candidate_skills">Candidate Skills</label>
+            <textarea id="candidate_skills" name="candidate_skills" rows="4"
+                      placeholder="Python, SQL, Flask">{% if candidate_skills %}{{ ', '.join(candidate_skills) }}{% endif %}</textarea>
+        </div>
+
+        <button type="submit" class="save-btn">Check Match</button>
+    </form>
+</div>
+
+{% if selected_job %}
+    <h3>Match Results</h3>
+    <p><strong>Job:</strong> {{ selected_job.job_title }} - {{ selected_job.company_name }}</p>
+    <p><strong>Match Score:</strong> {{ percentage }}%</p>
+
+    <p><strong>Matched Skills:</strong></p>
+    <ul>
+        {% for skill in matched_skills %}
+            <li>{{ skill }}</li>
+        {% endfor %}
+    </ul>
+
+    <p><strong>Missing Skills:</strong></p>
+    <ul>
+        {% for skill in missing_skills %}
+            <li>{{ skill }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="POST" action="{{ url_for('save_match', job_id=selected_job.job_id) }}">
+        <input type="hidden" name="candidate_skills" value="{{ ', '.join(candidate_skills) }}">
+        <button type="submit" class="save-btn">Save Match</button>
+    </form>
+{% endif %}
+{% endblock %}

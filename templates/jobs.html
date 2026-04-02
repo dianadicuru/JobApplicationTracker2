@@ -1,33 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Jobs</h2>
+<h1>Jobs</h1>
 
-<a class="button" href="{{ url_for('add_job') }}">Add Job</a>
+<p><a href="{{ url_for('add_job') }}" class="add-link">Add Job</a></p>
 
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Company</th>
-        <th>Title</th>
-        <th>Salary</th>
-        <th>Status</th>
-        <th>Required Skills</th>
-        <th>Actions</th>
-    </tr>
-    {% for job in jobs %}
-    <tr>
-        <td>{{ job.job_id }}</td>
-        <td>{{ job.company_name }}</td>
-        <td>{{ job.title }}</td>
-        <td>{{ job.salary }}</td>
-        <td>{{ job.status }}</td>
-        <td>{{ job.required_skills }}</td>
-        <td>
-            <a href="{{ url_for('edit_job', job_id=job.job_id) }}">Edit</a>
-            <a href="{{ url_for('delete_job', job_id=job.job_id) }}">Delete</a>
-        </td>
-    </tr>
-    {% endfor %}
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>Job Title</th>
+            <th>Company</th>
+            <th>Job Type</th>
+            <th>Salary Range</th>
+            <th>Date Posted</th>
+            <th>Requirements</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for job in jobs %}
+        <tr>
+            <td>{{ job.job_title }}</td>
+            <td>{{ job.company_name }}</td>
+            <td>{{ job.job_type or '' }}</td>
+            <td>
+                {% if job.salary_min and job.salary_max %}
+                    ${{ job.salary_min }} - ${{ job.salary_max }}
+                {% elif job.salary_min %}
+                    From ${{ job.salary_min }}
+                {% elif job.salary_max %}
+                    Up to ${{ job.salary_max }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+            <td>{{ job.date_posted or '' }}</td>
+            <td>{{ job.requirements or '' }}</td>
+            <td>
+                <a href="{{ url_for('edit_job', job_id=job.job_id) }}" class="edit-btn">Edit</a>
+                <a href="{{ url_for('delete_job', job_id=job.job_id) }}"
+                   class="delete-btn"
+                   onclick="return confirm('Are you sure you want to delete this job?');">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

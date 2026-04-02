@@ -1,32 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Applications</h2>
+<h1>Applications</h1>
 
-<a class="button" href="{{ url_for('add_application') }}">Add Application</a>
+<p><a href="{{ url_for('add_application') }}" class="add-link">Add Application</a></p>
 
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Job</th>
-        <th>Date</th>
-        <th>Status</th>
-        <th>User Skills</th>
-        <th>Actions</th>
-    </tr>
-    {% for application in applications %}
-    <tr>
-        <td>{{ application.application_id }}</td>
-        <td>{{ application.job_title }}</td>
-        <td>{{ application.application_date }}</td>
-        <td>{{ application.status }}</td>
-        <td>{{ application.user_skills }}</td>
-        <td>
-            <a href="{{ url_for('edit_application', application_id=application.application_id) }}">Edit</a>
-            <a href="{{ url_for('delete_application', application_id=application.application_id) }}">Delete</a>
-            <a href="{{ url_for('match', application_id=application.application_id) }}">Job Match</a>
-        </td>
-    </tr>
-    {% endfor %}
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>Company</th>
+            <th>Job Title</th>
+            <th>Status</th>
+            <th>Date Applied</th>
+            <th>Notes</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for application in applications %}
+        <tr>
+            <td>{{ application.company_name }}</td>
+            <td>{{ application.job_title }}</td>
+            <td>{{ application.status }}</td>
+            <td>{{ application.date_applied }}</td>
+            <td>{{ application.notes }}</td>
+            <td>
+                <a href="/edit_application/{{ application.id }}">Edit</a>
+                <a href="/delete_application/{{ application.id }}">Delete</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="7">No applications found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

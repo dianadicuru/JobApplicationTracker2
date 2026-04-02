@@ -3,29 +3,62 @@
 {% block content %}
 <h2>{{ 'Edit' if application else 'Add' }} Application</h2>
 
+<div class="form-card">
 <form method="POST">
-    <label for="job_id">Job</label>
-    <select id="job_id" name="job_id" required>
-        {% for job in jobs %}
-        <option value="{{ job.job_id }}"
-            {% if application and application.job_id == job.job_id %}selected{% endif %}>
-            {{ job.title }}
-        </option>
-        {% endfor %}
-    </select>
 
-    <label for="application_date">Application Date</label>
-    <input type="date" id="application_date" name="application_date" value="{{ application.application_date if application else '' }}">
+    <div class="form-group">
+        <label for="job_id">Job</label>
+        <select id="job_id" name="job_id" required>
+            <option value="">Select a job</option>
+            {% for job in jobs %}
+            <option value="{{ job.job_id }}"
+                {% if application and application.job_id == job.job_id %}selected{% endif %}>
+                {{ job.job_title }} - {{ job.company_name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
 
-    <label for="status">Status</label>
-    <input type="text" id="status" name="status" value="{{ application.status if application else '' }}">
+    <div class="form-group">
+        <label for="application_date">Application Date</label>
+        <input type="date" id="application_date" name="application_date"
+               value="{{ application.application_date if application else '' }}" required>
+    </div>
 
-    <label for="user_skills">Your Skills (comma separated)</label>
-    <input type="text" id="user_skills" name="user_skills" value="{{ application.user_skills if application else '' }}">
+    <div class="form-group">
+        <label for="status">Status</label>
+        <select id="status" name="status">
+            <option value="Applied" {% if application and application.status == 'Applied' %}selected{% endif %}>Applied</option>
+            <option value="Screening" {% if application and application.status == 'Screening' %}selected{% endif %}>Screening</option>
+            <option value="Interview" {% if application and application.status == 'Interview' %}selected{% endif %}>Interview</option>
+            <option value="Offer" {% if application and application.status == 'Offer' %}selected{% endif %}>Offer</option>
+            <option value="Rejected" {% if application and application.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+            <option value="Withdrawn" {% if application and application.status == 'Withdrawn' %}selected{% endif %}>Withdrawn</option>
+        </select>
+    </div>
 
-    <label for="notes">Notes</label>
-    <textarea id="notes" name="notes">{{ application.notes if application else '' }}</textarea>
+    <div class="form-group">
+        <label for="resume_version">Resume Version</label>
+        <input type="text" id="resume_version" name="resume_version"
+               value="{{ application.resume_version if application else '' }}">
+    </div>
 
-    <button type="submit">Save</button>
+    <div class="form-group">
+        <label for="cover_letter_sent">
+            <input type="checkbox" id="cover_letter_sent" name="cover_letter_sent"
+                {% if application and application.cover_letter_sent %}checked{% endif %}>
+            Cover Letter Sent
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label for="interview_data">Interview Data (JSON)</label>
+        <textarea id="interview_data" name="interview_data" rows="5"
+        placeholder='{"interview_rounds": 2, "feedback": "Strong communication"}'>{{ application.interview_data if application and application.interview_data else '' }}</textarea>
+    </div>
+
+    <button type="submit" class="save-btn">Save</button>
+
 </form>
+</div>
 {% endblock %}

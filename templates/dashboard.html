@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Dashboard</h2>
+
+<div class="dashboard-cards">
+    <a href="/companies" class="dashboard-link">
+        <div class="card">
+            <h3>Companies</h3>
+            <p>{{ stats.companies }}</p>
+        </div>
+    </a>
+
+    <a href="/jobs" class="dashboard-link">
+        <div class="card">
+            <h3>Jobs</h3>
+            <p>{{ stats.jobs }}</p>
+        </div>
+    </a>
+
+    <a href="/applications" class="dashboard-link">
+        <div class="card">
+            <h3>Applications</h3>
+            <p>{{ stats.applications }}</p>
+        </div>
+    </a>
+
+    <a href="/contacts" class="dashboard-link">
+        <div class="card">
+            <h3>Contacts</h3>
+            <p>{{ stats.contacts }}</p>
+        </div>
+    </a>
+
+    <div class="card avg-match-card">
+    <h3>Average Match</h3>
+    <p>{{ stats.avg_match }}%</p>
+</div>
+
+</div>
+
+{% if recent_applications %}
+    <h3>Recent Applications</h3>
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Job Title</th>
+                <th>Status</th>
+                <th>Application Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in recent_applications %}
+            <tr>
+                <td>{{ application.company_name }}</td>
+                <td>{{ application.job_title }}</td>
+                <td>{{ application.status }}</td>
+                <td>{{ application.application_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}
