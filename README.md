@@ -26,3 +26,6 @@ Store structured job requirements using JSON
 - requirements.txt
 - README.md
 - AI_USAGE.md
+
+## Video
+https://youtu.be/VSFgnRCakDk 
